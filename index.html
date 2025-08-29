@@ -315,5 +315,41 @@
       outline-offset: 2px;
     }
   </style>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const widget = document.querySelector('elevenlabs-convai');
+    if (!widget) return;
+
+    // GitHub Pages'teki sayfa eşlemeleri
+    const PAGE_MAP = {
+      'hakkında': '/hakkinda.html',
+      'hakkinda': '/hakkinda.html',
+      'iletisim': '/iletisim.html',
+      'iletişim': '/iletisim.html',
+      'anasayfa': '/index.html',
+      'home': '/index.html'
+    };
+
+    widget.addEventListener('elevenlabs-convai:call', (event) => {
+      event.detail.config = event.detail.config || {};
+      event.detail.config.clientTools = {
+        redirectToExternalURL: ({ url, page, newTab }) => {
+          if (!url && page) {
+            const key = String(page).toLowerCase();
+            url = PAGE_MAP[key] || '/index.html';
+          }
+          if (!url) return;
+
+          if (newTab) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+          } else {
+            window.location.href = url;
+          }
+        }
+      };
+    });
+  });
+</script>
+
 </body>
 </html>
