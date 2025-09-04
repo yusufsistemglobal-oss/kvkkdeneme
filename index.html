@@ -11,15 +11,15 @@
 
   <style>
     :root{
-      --bg-carbon: #e9eef6;       /* beyazımsı bg */
+      --bg-carbon: #0f1115;       /* karbon */
       --card-carbon: #151922;     /* koyu kart */
-      --text: #e9eef6;            /* beyazımsı metin */
-      --muted: #b6c2d9;
+      --text: #0f1115;            /* metin rengi koyu (beyaz arka plan için) */
+      --muted: #4a4a4a;
       --soft-orange: #ff8a4c;     /* soft turuncu */
       --soft-orange-20: rgba(255, 138, 76, .2);
       --ring: rgba(255, 138, 76, .35);
       --white: #ffffff;
-      --grid: rgba(255,255,255,.06);
+      --grid: rgba(0,0,0,.06);
     }
 
     *{ box-sizing: border-box; }
@@ -28,24 +28,11 @@
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(1200px 600px at 90% -10%, var(--soft-orange-20), transparent 60%),
-        radial-gradient(800px 400px at -10% 10%, rgba(255,255,255,.05), transparent 60%),
-        var(--bg-carbon);
+      background: #ffffff; /* arka plan beyaz */
       overflow-x: hidden;
     }
 
-    .grid{
-      position: fixed;
-      inset:0;
-      background-image:
-        linear-gradient(var(--grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-      background-size: 36px 36px, 36px 36px;
-      mask-image: radial-gradient(1000px 600px at 50% -10%, rgba(0,0,0,.6), transparent 70%);
-      pointer-events:none;
-      z-index:0;
-    }
+    .grid{ display: none; } /* Izgara efektini kapattım */
 
     header{
       position: relative;
@@ -74,7 +61,7 @@
       font-weight:700;
       box-shadow: 0 10px 30px rgba(255, 138, 76, .35);
       transition: transform .12s ease, box-shadow .2s ease, filter .2s ease;
-      border: 1px solid rgba(255,255,255,.08);
+      border: 1px solid rgba(0,0,0,.08);
     }
     .cta:hover{ transform: translateY(-1px); filter: brightness(1.06); }
     .ghost{
@@ -98,7 +85,7 @@
     .eyebrow{
       display:inline-flex; align-items:center; gap:10px;
       padding:6px 10px; border-radius: 999px;
-      border:1px solid var(--ring); background: rgba(255,255,255,.02);
+      border:1px solid var(--ring); background: rgba(0,0,0,.02);
       font-size: 12px; color: var(--muted);
     }
     .pulse{
@@ -132,6 +119,7 @@
         inset 0 1px 0 rgba(255,255,255,.06),
         0 20px 80px rgba(0,0,0,.45);
       padding: clamp(16px, 2vw, 22px);
+      color: var(--white);
     }
     .panel::after{
       content:"";
@@ -162,6 +150,7 @@
       border:1px solid rgba(255,255,255,.08);
       border-radius:16px;
       padding:18px;
+      color: var(--white);
     }
     .feature h3{ margin: 8px 0 6px; font-size:18px; }
     .kicker{ color: var(--soft-orange); font-weight: 700; font-size: 12px; letter-spacing: .3px; text-transform: uppercase; }
@@ -176,7 +165,7 @@
 
     footer{
       margin-top: 56px; padding: 24px 0 52px; color: var(--muted); font-size: 13px;
-      border-top: 1px dashed rgba(255,255,255,.08);
+      border-top: 1px dashed rgba(0,0,0,.08);
     }
 
     /* Fancy underline */
@@ -192,6 +181,23 @@
     html{ scroll-behavior: smooth; }
 
     .note{ font-size:12px; color: var(--muted); opacity:.9; }
+
+    /* ElevenLabs branding gizleme */
+    elevenlabs-convai::part(powered-by),
+    elevenlabs-convai .powered-by,
+    elevenlabs-convai [class*="powered"],
+    elevenlabs-convai [class*="brand"] {
+      display: none !important;
+    }
+    elevenlabs-convai {
+      --hide-branding: true;
+    }
+
+    /* Basit erişilebilir odak stili */
+    :focus-visible{
+      outline: 2px solid var(--soft-orange);
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>
@@ -246,8 +252,8 @@
           </div>
 
           <!-- ElevenLabs ConvAI Widget -->
-          <!-- İsterseniz kendi agent-id değerinizi girin -->
-          <elevenlabs-convai agent-id="agent_7201k3jhtjavew1rdfgqh62mypjm"></elevenlabs-convai><script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+          <elevenlabs-convai agent-id="agent_7201k3jhtjavew1rdfgqh62mypjm"></elevenlabs-convai>
+          <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 
           <div class="badgebar">
             <span class="badge">Türkiye mevzuat odaklı</span>
@@ -308,13 +314,6 @@
     </footer>
   </main>
 
-  <!-- Basit erişilebilir odak stili -->
-  <style>
-    :focus-visible{
-      outline: 2px solid var(--soft-orange);
-      outline-offset: 2px;
-    }
-  </style>
   <script>
   document.addEventListener('DOMContentLoaded', () => {
     const widget = document.querySelector('elevenlabs-convai');
@@ -349,7 +348,6 @@
       };
     });
   });
-</script>
-
+  </script>
 </body>
 </html>
